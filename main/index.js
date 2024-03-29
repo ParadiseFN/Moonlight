@@ -12,6 +12,11 @@ express.use((req, res, next) => {
     next();
 });
 
+fs.readdirSync("./main/operations").forEach(file => {
+    const route = require(path.join(__dirname, "operations", file));
+    express.use(route);
+});
+
 express.get("/", async (req, res) => {
     res.json({
         message: "Moonlight is running!"
@@ -40,14 +45,9 @@ express.use(async (req, res, next) => {
     res.end();
   });
 
-fs.readdirSync("./main/operations").forEach(file => {
-    const route = require(path.join(__dirname, "operations", file));
-    express.use(route);
-});
 
 express.listen(port, () => {
     log.backend(`Moonlight started on Port ${port}`)
 });
-
 
 module.exports = express

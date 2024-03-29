@@ -1201,7 +1201,6 @@ express.get("/fortnite/api/calendar/v1/timeline", async (req, res) => {
     }
 
     const todayAtMidnight = new Date();
-    //todayAtMidnight.setHours(24, 0, 0, 0);
     const dUTC = new Date(Date.UTC(todayAtMidnight.getUTCFullYear(), todayAtMidnight.getUTCMonth(),
         todayAtMidnight.getUTCDate(), 24, 0, 0, 0));
     const todayOneMinuteBeforeMidnight = new Date(dUTC.getTime() - 60000);

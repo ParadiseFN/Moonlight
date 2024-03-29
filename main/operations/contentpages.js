@@ -10,4 +10,5 @@ express.get("/content/api/pages/fortnite-game", async (req,res) => {
     res.json(c);
 });
 
+
 module.exports = express
