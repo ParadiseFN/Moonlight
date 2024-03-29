@@ -11,5 +11,4 @@
 # Supported MCP Functions
 none yet lmao
 
-
 ## Developed by Itztiva

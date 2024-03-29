@@ -65,9 +65,9 @@ express.get("/fortnite/api/cloudstorage/user/:accountId", functions.getUser, asy
     let clientSettingsPath = path.join(__dirname, "..", "ClientSettings", req.user.accountId);
     if (!fs.existsSync(clientSettingsPath)) fs.mkdirSync(clientSettingsPath);
 
-    const memory = functions.getVersion(req);
+    const ver = functions.getVersion(req);
     
-    let file = path.join(clientSettingsPath, `ClientSettings-${memory.season}.Sav`);
+    let file = path.join(clientSettingsPath, `ClientSettings-${ver.season}.Sav`);
 
     if (fs.existsSync(file)) {
         const ParsedFile = fs.readFileSync(file, 'latin1');
