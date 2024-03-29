@@ -12,8 +12,8 @@ express.use((req, res, next) => {
     next();
 });
 
-fs.readdirSync("./main/operations").forEach(file => {
-    const route = require(path.join(__dirname, "operations", file));
+fs.readdirSync("./main/services").forEach(file => {
+    const route = require(path.join(__dirname, "services", file));
     express.use(route);
 });
 
