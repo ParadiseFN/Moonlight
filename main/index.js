@@ -42,9 +42,8 @@ express.use(async (req, res, next) => {
       "originatingService": "any",
       "intent": "prod"
     });
-    res.end();
-  });
-
+  res.end();
+});
 
 express.listen(port, () => {
     log.backend(`Moonlight started on Port ${port}`)

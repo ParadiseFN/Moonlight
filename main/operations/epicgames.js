@@ -32,12 +32,12 @@ express.get("/launcher/api/public/assets/*", async (req, res) => {
 
 express.get("/Builds/Fortnite/Content/CloudDir/*.manifest", async (req, res) => {
     res.set("Content-Type", "application/octet-stream")
-    const manifest = fs.readFileSync(path.join(__dirname, "..", "..", "local", "resources", "cd", "Moonlight.manifest"));
+    const manifest = fs.readFileSync(path.join(__dirname, ".", "..", "..", "local", "resources", "cd", "Moonlight.manifest"));
     res.status(200).send(manifest).end();
 });
 
 express.get("/Builds/Fortnite/Content/CloudDir/*.ini", async (req, res) => {
-    const ini = fs.readFileSync(path.join(__dirname, "..", "..", "resources", "cd", "stuff.ini"));
+    const ini = fs.readFileSync(path.join(__dirname, ".", "..", "..", "local", "resources", "cd", "stuff.ini"));
     res.status(200).send(ini).end();
 });
 
