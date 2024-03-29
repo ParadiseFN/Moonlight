@@ -1,5 +1,6 @@
 const Express = require("express")
 const express = Express();
+const log = require("./utils/base/log.js")
 const path = require("path");
 require('dotenv').config({ path: path.resolve(__dirname, 'config', '.env') });
 
@@ -12,5 +13,7 @@ express.get("/", async (req, res) => {
 });
 
 express.listen(port, () => {
-    console.log(`Moonlight started on Port ${port}`)
-})
+    log.backend(`Moonlight started on Port ${port}`)
+});
+
+module.exports = express
