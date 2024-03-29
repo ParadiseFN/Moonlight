@@ -1,6 +1,7 @@
 const Express = require("express")
 const express = Express();
 const log = require("./utils/base/log.js")
+const fs = require("fs");
 const path = require("path");
 require('dotenv').config({ path: path.resolve(__dirname, 'config', '.env') });
 
@@ -12,8 +13,14 @@ express.get("/", async (req, res) => {
     });
 });
 
+fs.readdirSync("./main/operations").forEach(file => {
+    const route = require(path.join(__dirname, "operations", file));
+    express.use(route);
+});
+
 express.listen(port, () => {
     log.backend(`Moonlight started on Port ${port}`)
 });
+
 
 module.exports = express
