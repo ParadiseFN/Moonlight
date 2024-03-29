@@ -1,4 +1,11 @@
 # Moonlight
 Moonlight, A fortnite backend made in Javascript.
 
-Development will start for this soon.
+# Todo
+- MCP
+- ClientSettings
+- Proper Auth
+- Proper Cloudstorage
+- Eos Support
+
+Developed by Itztiva
