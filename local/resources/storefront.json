@@ -1,0 +1,72 @@
+{
+  "daily1": {
+    "itemGrants": [
+      "AthenaCharacter:CID_056_Athena_Commando_M_SkiDude_GBR"
+    ],
+    "price": 1500,
+    "imageUrl": "https://fortnite-api.com/images/cosmetics/br/cid_056_athena_commando_m_skidude_gbr/icon.png"
+  },
+  "daily2": {
+    "itemGrants": [
+      "AthenaCharacter:CID_063_Athena_Commando_F_SkiGirl_CAN"
+    ],
+    "price": 1500,
+    "imageUrl": "https://fortnite-api.com/images/cosmetics/br/cid_063_athena_commando_f_skigirl_can/icon.png"
+  },
+  "daily3": {
+    "itemGrants": [
+      "AthenaDance:EID_PureSalt"
+    ],
+    "price": 500,
+    "imageUrl": "https://fortnite-api.com/images/cosmetics/br/eid_puresalt/icon.png"
+  },
+  "daily4": {
+    "itemGrants": [
+      "AthenaDance:EID_DustingHands"
+    ],
+    "price": 200,
+    "imageUrl": "https://fortnite-api.com/images/cosmetics/br/eid_dustinghands/icon.png"
+  },
+  "daily5": {
+    "itemGrants": [
+      "AthenaPickaxe:Pickaxe_ID_037_Stealth"
+    ],
+    "price": 800,
+    "imageUrl": "https://fortnite-api.com/images/cosmetics/br/pickaxe_id_037_stealth/icon.png"
+  },
+  "daily6": {
+    "itemGrants": [
+      "AthenaGlider:Glider_Prismatic"
+    ],
+    "price": 800,
+    "imageUrl": "https://fortnite-api.com/images/cosmetics/br/glider_prismatic/icon.png"
+  },
+  "featured1": {
+    "itemGrants": [
+      "AthenaCharacter:CID_199_Athena_Commando_F_BlueSamurai"
+    ],
+    "price": 2000,
+    "imageUrl": "https://fortnite-api.com/images/cosmetics/br/cid_199_athena_commando_f_bluesamurai/icon.png"
+  },
+  "featured2": {
+    "itemGrants": [
+      "AthenaCharacter:CID_135_Athena_Commando_F_Jailbird"
+    ],
+    "price": 1500,
+    "imageUrl": "https://fortnite-api.com/images/cosmetics/br/cid_135_athena_commando_f_jailbird/icon.png"
+  },
+  "featured3": {
+    "itemGrants": [
+      "AthenaPickaxe:Pickaxe_ID_080_Scuba"
+    ],
+    "price": 800,
+    "imageUrl": "https://fortnite-api.com/images/cosmetics/br/pickaxe_id_080_scuba/icon.png"
+  },
+  "featured4": {
+    "itemGrants": [
+      "AthenaGlider:Glider_ID_046_Gumshoe"
+    ],
+    "price": 1200,
+    "imageUrl": "https://fortnite-api.com/images/cosmetics/br/glider_id_046_gumshoe/icon.png"
+  }
+}
