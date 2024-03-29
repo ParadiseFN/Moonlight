@@ -65,4 +65,23 @@ express.post("/account/api/oauth/token", async(req, res) => {
         });
 });
 
+express.get("/account/api/oauth/verify", async (req, res) => {
+    res.json({
+        token: "tivaishot",
+        session_id: "9a1f5e80b47d2c3e6f8a0dc592b4fe7d",
+        token_type: "bearer",
+        client_id: "clientId",
+        internal_client: true,
+        client_service: "fortnite",
+        account_id: "moonlighttest1",
+        expires_in: 28800,
+        expires_at: "9999-12-02T01:12:01.100Z",
+        auth_method: "exchange_code",
+        displayName: "penis",
+        app: "fortnite",
+        in_app_id: "moonlighttest1",
+        device_id: "deviceId",
+    });
+});
+
 module.exports = express;

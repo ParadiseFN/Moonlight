@@ -61,33 +61,7 @@ express.use((req, res, next) => {
         return next();
 });
 
-express.get("/fortnite/api/cloudstorage/user/:accountId", functions.getUser, async (req, res) => {
-    let clientSettingsPath = path.join(__dirname, "..", "ClientSettings", req.user.accountId);
-    if (!fs.existsSync(clientSettingsPath)) fs.mkdirSync(clientSettingsPath);
-
-    const ver = functions.getVersion(req);
-    
-    let file = path.join(clientSettingsPath, `ClientSettings-${ver.season}.Sav`);
-
-    if (fs.existsSync(file)) {
-        const ParsedFile = fs.readFileSync(file, 'latin1');
-        const ParsedStats = fs.statSync(file);
-
-        return res.json([{
-            "uniqueFilename": "ClientSettings.Sav",
-            "filename": "ClientSettings.Sav",
-            "hash": crypto.createHash('sha1').update(ParsedFile).digest('hex'),
-            "hash256": crypto.createHash('sha256').update(ParsedFile).digest('hex'),
-            "length": Buffer.byteLength(ParsedFile),
-            "contentType": "application/octet-stream",
-            "uploaded": ParsedStats.mtime,
-            "storageType": "S3",
-            "storageIds": {},
-            "accountId": req.user.accountId,
-            "doNotCache": false
-        }]);
-    }
-    
+express.get("/fortnite/api/cloudstorage/user/:accountId", async (req, res) => {
     res.json([]);
 });
 

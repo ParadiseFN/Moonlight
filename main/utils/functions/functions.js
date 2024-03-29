@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken');
+
 const getVersion = (req) => {
     let memory = {
         season: 0,
