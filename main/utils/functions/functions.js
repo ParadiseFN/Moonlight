@@ -1,5 +1,21 @@
 const jwt = require('jsonwebtoken');
 
+async function getUser(req, res, next) {
+    if (!req.headers["authorization"]) {
+        return res.status(401).end();
+    }
+  
+    let token = req.headers["authorization"].replace("bearer ", "");
+    let decodedToken = jwt.decode(token);
+  
+    if (decodedToken) {
+        req.user = await User.findOne({ email: decodedToken.email });
+        if (!bcrypt.compare(decodedToken.password, req.user.password)) return res.status(403).end();
+    }
+    next();
+  }
+  
+  
 const getVersion = (req) => {
     let memory = {
         season: 0,
@@ -138,5 +154,6 @@ const createError = (errorCode, errorMessage, messageVars, numericErrorCode, err
 module.exports = {
     getVersion,
     contentpages,
-    createError
+    createError, 
+    getUser
 };
