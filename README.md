@@ -11,6 +11,5 @@ Development will be slow as im busy atm
 - Eos Support
 
 # Supported MCP Functions
-none yet lmao
-
+``QueryProfile``
 ## Developed by Itztiva
