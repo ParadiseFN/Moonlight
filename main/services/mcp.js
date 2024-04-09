@@ -5,20 +5,20 @@ const path = require("path");
 const functions = require("../utils/functions/functions.js")
 require('dotenv').config({ path: path.resolve(__dirname, 'config', '.env') });
 
-/*express.get("/fortnite/api/game/v2/profile/* /client/:op", async (req, res) => {
-    var profile = fs.readFileSync(`E:/github/yap/Moonlight/local/athena/profile_${req.query.profileId}`);
-    return await require(`../mcp/operations/${req.params.op}`)(req, res, profile, req.query.rvn, profile.rvn, profile.commandRevision);
-}); */
+ express.post("/fortnite/api/game/v2/profile/*/client/:operation", functions.getUser, async (req, res, next) => {
+    let MultiUpdate = [];
+    let ApplyProfileChanges = [];
+    let BaseRevision;
+    let QueryRevision = req.query.rvn || -1;
+    let profile; 
 
-
-express.post("/fortnite/api/game/v2/profile/*/client/QueryProfile", functions.getUser, async (req, res, next) => {
     if (!req.query.profileId) {
         return res.status(404).end() 
     }
 
     fs.readdirSync("./local/athena").forEach((file) => {
         if (file.endsWith(".json")) {
-            const profile = require(`E:/github/yap/Moonlight/local/athena/${file}`);
+            profile = require(`E:/github/yap/Moonlight/local/athena/${file}`); 
             if (!profile.rvn) profile.rvn = 0;
             if (!profile.items) profile.items = {};
             if (!profile.stats) profile.stats = {};
@@ -29,9 +29,23 @@ express.post("/fortnite/api/game/v2/profile/*/client/QueryProfile", functions.ge
         }
     });
 
-    // u also need to return an MCP return btw
+    BaseRevision = profile.rvn;
 
-});
-
+    switch (req.params.operation) {
+        case "QueryProfile": break;
+        case "SetMtxPlatform": break;
+    }
+    
+    res.json({
+        profileRevision: profile.rvn || 0,
+        profileId: req.query.profileId,
+        profileChangesBaseRevision: BaseRevision,
+        profileChanges: ApplyProfileChanges,
+        profileCommandRevision: profile.commandRevision || 0,
+        serverTime: new Date().toISOString(),
+        multiUpdate: MultiUpdate,
+        responseVersion: 1
+    });
+}); 
 
 module.exports = express;

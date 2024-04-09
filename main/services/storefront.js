@@ -5,9 +5,17 @@ const functions = require("../utils/functions/functions.js")
 const fs = require("fs");
 const path = require("path");
 
+const keychain = require("../../local/resources/keychain.json")
+
+const catalog = require("../../local/resources/catalog.json")
+
 
 express.get("/fortnite/api/storefront/v2/keychain", async (req, res) => {
-    res.json(JSON.parse(fs.readFileSync('../../local/resources/keychain.json', 'utf8')));
+    res.json(keychain)
+});
+
+express.get("/fortnite/api/storefront/v2/catalog", async (req, res) => {
+    res.json(catalog)
 });
 
 module.exports = express

@@ -93,6 +93,9 @@ const contentpages = (req) => {
     try {
         c.dynamicbackgrounds.backgrounds.backgrounds[0].stage = `season${ver.season}`;
         c.dynamicbackgrounds.backgrounds.backgrounds[1].stage = `season${ver.season}`;
+        c.emergencynotice.news.messages[0].title = `Moonlight ${ver.build}`;
+        c.emergencynotice.news.messages[0].body = `Welcome to Moonlight Season ${ver.season}`;
+
 
         if (ver.season == 10) {
             c.dynamicbackgrounds.backgrounds.backgrounds[0].stage = "seasonx";

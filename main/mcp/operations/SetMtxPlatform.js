@@ -11,19 +11,6 @@ module.exports = (req, res, queryRvn, rvn, commandRevision, next) => {
         return res.status(404).end() 
     }
 
-    fs.readdirSync("./local/athena").forEach((file) => {
-        if (file.endsWith(".json")) {
-            profile = require(`E:/github/yap/Moonlight/local/athena/${file}`); 
-            if (!profile.rvn) profile.rvn = 0;
-            if (!profile.items) profile.items = {};
-            if (!profile.stats) profile.stats = {};
-            if (!profile.stats.attributes) profile.stats.attributes = {};
-            if (!profile.commandRevision) profile.commandRevision = 0;
-
-            fs.writeFileSync(`./local/athena/${file}`, JSON.stringify(profile, null, 2));
-        }
-    });
-
     BaseRevision = profile.rvn;
     
     res.json({
