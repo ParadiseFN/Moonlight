@@ -4,20 +4,27 @@ const fs = require("fs");
 const path = require("path");
 const functions = require("../utils/functions/functions.js")
 require('dotenv').config({ path: path.resolve(__dirname, 'config', '.env') });
-
+const userpath = new Set();
 
 express.post("/fortnite/api/game/v2/profile/*/client/:operation", functions.getUser, async (req, res, next) => {
     let MultiUpdate = [];
     let ApplyProfileChanges = [];
-    let BaseRevision;
-    let profile; 
+    let BaseRevision = 0; 
+    let profile;
 
     if (!req.query.profileId) {
         return res.status(404).end();
     }
 
+    const profileId = req.query.profileId;
+
+    if (userpath.has(profileId)) {
+        return res.status(203).json({ message: "this has been done before ig" });
+    }
+
     const files = fs.readdirSync("local/athena");
     files.forEach((file) => {
+        console.log("Processing file:", file);
         if (file.endsWith(".json")) {
             profile = require(`../../local/athena/${file}`);
             if (!profile.rvn) profile.rvn = 0;
@@ -34,9 +41,13 @@ express.post("/fortnite/api/game/v2/profile/*/client/:operation", functions.getU
 
     switch (req.params.operation) {
         case "QueryProfile": 
+            console.log("QueryProfile op");
             break;
         case "SetMtxPlatform": 
             break;
+        default:
+            console.log("Invalid operation:", req.params.operation);
+            return res.status(400).json({ error: "Invalid op" });
     }
     
     res.json({
@@ -49,6 +60,8 @@ express.post("/fortnite/api/game/v2/profile/*/client/:operation", functions.getU
         multiUpdate: MultiUpdate,
         responseVersion: 1
     });
+
+    userpath.add(profileId);
 });
 
 // love to lawin 
