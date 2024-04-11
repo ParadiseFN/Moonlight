@@ -19,20 +19,21 @@ express.post("/fortnite/api/game/v2/profile/*/client/:operation", functions.getU
     const profileId = req.query.profileId;
 
     if (userpath.has(profileId)) {
-        return res.status(203).json({ message: "this has been done before ig" });
+        return res.status(203).end();
     }
 
     const files = fs.readdirSync("local/athena");
     files.forEach((file) => {
         if (file.endsWith(".json")) {
-            profile = require(`../../local/athena/${file}`);
-            if (!profile.rvn) profile.rvn = 0;
-            if (!profile.items) profile.items = {};
-            if (!profile.stats) profile.stats = {};
-            if (!profile.stats.attributes) profile.stats.attributes = {};
-            if (!profile.commandRevision) profile.commandRevision = 0;
+            const profiles = require(`../../local/athena/${file}`);
+            if (!profiles.rvn) profiles.rvn = 0;
+            if (!profiles.items) profiles.items = {};
+            if (!profiles.stats) profiles.stats = {};
+            if (!profiles.stats.attributes) profiles.stats.attributes = {};
+            if (!profiles.commandRevision) profiles.commandRevision = 0;
 
-            fs.writeFileSync(`./local/profiles/${file}`, JSON.stringify(profile, null, 2));
+            fs.writeFileSync(`./local/profiles/${file}`, JSON.stringify(profiles, null, 2));
+            if (file === `profile_${profileId}.json`) profile = profiles;
         }
     });
 
@@ -40,13 +41,19 @@ express.post("/fortnite/api/game/v2/profile/*/client/:operation", functions.getU
 
     switch (req.params.operation) {
         case "QueryProfile": 
-            console.log("QueryProfile op");
             break;
         case "SetMtxPlatform": 
             break;
+        case "ClientQuestLogin": 
+            break;
         default:
-            return res.status(203).json({ error: "Invalid op" });
+        break;
     }
+    
+    ApplyProfileChanges.push({
+        "changeType": "fullProfileUpdate",
+        "profile": profile
+    });
     
     res.json({
         profileRevision: profile ? profile.rvn || 0 : 0,
@@ -193,7 +200,8 @@ express.post("/fortnite/api/game/v2/profile/*/client/EquipBattleRoyaleCustomizat
                 "attributeValue": profile.items[req.body.itemToSlot].attributes.variants
             })
         }
-        fs.writeFileSync("./local/athena/profile_athena.json", JSON.stringify(profile, null, 2));
+        const battleroyalepath = require("./local/profiles/profile_athena.json")
+        fs.writeFileSync(battleroyalepath, JSON.stringify(profile, null, 2));
     }
 
     if (QueryRevision != BaseRevision) {
