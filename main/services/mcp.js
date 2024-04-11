@@ -3,53 +3,57 @@ const express = Express();
 const fs = require("fs");
 const path = require("path");
 const functions = require("../utils/functions/functions.js")
-const profile = require(`E:/github/yap/Moonlight/local/athena/${file}`); 
 require('dotenv').config({ path: path.resolve(__dirname, 'config', '.env') });
 
- express.post("/fortnite/api/game/v2/profile/*/client/:operation", functions.getUser, async (req, res, next) => {
+
+express.post("/fortnite/api/game/v2/profile/*/client/:operation", functions.getUser, async (req, res, next) => {
     let MultiUpdate = [];
     let ApplyProfileChanges = [];
     let BaseRevision;
     let profile; 
 
     if (!req.query.profileId) {
-        return res.status(404).end() 
+        return res.status(404).end();
     }
 
-    fs.readdirSync("./local/athena").forEach((file) => {
+    const files = fs.readdirSync("local/athena");
+    files.forEach((file) => {
         if (file.endsWith(".json")) {
-            profile = require(`E:/github/yap/Moonlight/local/athena/${file}`); 
+            profile = require(`../../local/athena/${file}`);
             if (!profile.rvn) profile.rvn = 0;
             if (!profile.items) profile.items = {};
             if (!profile.stats) profile.stats = {};
             if (!profile.stats.attributes) profile.stats.attributes = {};
             if (!profile.commandRevision) profile.commandRevision = 0;
 
-            fs.writeFileSync(`./local/athena/${file}`, JSON.stringify(profile, null, 2));
+            fs.writeFileSync(`./local/profiles/${file}`, JSON.stringify(profile, null, 2));
         }
     });
 
-    BaseRevision = profile.rvn;
+    BaseRevision = profile ? profile.rvn : 0;
 
     switch (req.params.operation) {
-        case "QueryProfile": break;
-        case "SetMtxPlatform": break;
+        case "QueryProfile": 
+            break;
+        case "SetMtxPlatform": 
+            break;
     }
     
     res.json({
-        profileRevision: profile.rvn || 0,
+        profileRevision: profile ? profile.rvn || 0 : 0,
         profileId: req.query.profileId,
         profileChangesBaseRevision: BaseRevision,
         profileChanges: ApplyProfileChanges,
-        profileCommandRevision: profile.commandRevision || 0,
+        profileCommandRevision: profile ? profile.commandRevision || 0 : 0,
         serverTime: new Date().toISOString(),
         multiUpdate: MultiUpdate,
         responseVersion: 1
     });
-}); 
+});
 
 // love to lawin 
 // TODO: Recode not in school lol
+
 express.post("/fortnite/api/game/v2/profile/*/client/EquipBattleRoyaleCustomization", async (req, res) => {
     var ApplyProfileChanges = [];
     var BaseRevision = profile.rvn || 0;
@@ -178,7 +182,7 @@ express.post("/fortnite/api/game/v2/profile/*/client/EquipBattleRoyaleCustomizat
                 "attributeValue": profile.items[req.body.itemToSlot].attributes.variants
             })
         }
-        fs.writeFileSync("../../local/athena/profile_athena.json", JSON.stringify(profile, null, 2));
+        fs.writeFileSync("./local/athena/profile_athena.json", JSON.stringify(profile, null, 2));
     }
 
     if (QueryRevision != BaseRevision) {
