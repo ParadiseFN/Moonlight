@@ -24,7 +24,6 @@ express.post("/fortnite/api/game/v2/profile/*/client/:operation", functions.getU
 
     const files = fs.readdirSync("local/athena");
     files.forEach((file) => {
-        console.log("Processing file:", file);
         if (file.endsWith(".json")) {
             profile = require(`../../local/athena/${file}`);
             if (!profile.rvn) profile.rvn = 0;
@@ -46,8 +45,7 @@ express.post("/fortnite/api/game/v2/profile/*/client/:operation", functions.getU
         case "SetMtxPlatform": 
             break;
         default:
-            console.log("Invalid operation:", req.params.operation);
-            return res.status(400).json({ error: "Invalid op" });
+            return res.status(203).json({ error: "Invalid op" });
     }
     
     res.json({
