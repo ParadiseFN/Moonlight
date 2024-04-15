@@ -3,6 +3,7 @@ const express = Express();
 const fs = require("fs");
 const path = require("path");
 const functions = require("../utils/functions/functions.js");
+const log = require("../utils/base/log.js");
 require("dotenv").config({ path: path.resolve(__dirname, "config", ".env") });
 const userpath = new Set();
 
@@ -59,6 +60,7 @@ express.post(
       case "ClientQuestLogin":
         break;
       default:
+        log.backend(`Error on ${req.method} ${req.path}`);
         functions.createError(
           "errors.com.epicgames.bad_request",
           "Operation not valid",

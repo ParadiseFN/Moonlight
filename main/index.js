@@ -27,7 +27,7 @@ express.get("/", async (req, res) => {
 });
 
 express.use(async (req, res, next) => {
-  log.backend("Error on:" + req.path);
+  log.backend(`Error on ${req.method} ${req.path}`);
   const errorname = "error.Moonlight.common.not_found";
   const errorcode = 1004;
 
