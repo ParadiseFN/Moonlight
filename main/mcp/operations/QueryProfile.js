@@ -13,7 +13,7 @@ module.exports = (req, res, queryRvn, rvn, commandRevision, next) => {
 
     fs.readdirSync("./local/athena").forEach((file) => {
         if (file.endsWith(".json")) {
-            profile = require(`E:/github/yap/Moonlight/local/athena/${file}`); 
+            profile = require(`../../../local/athena/${file}`);
             if (!profile.rvn) profile.rvn = 0;
             if (!profile.items) profile.items = {};
             if (!profile.stats) profile.stats = {};
