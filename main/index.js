@@ -8,6 +8,7 @@ require("dotenv").config({ path: path.resolve(__dirname, "config", ".env") });
 const port = process.env.PORT;
 
 express.use(Express.json());
+express.use(Express.urlencoded({ extended: true }));
 
 express.use((req, res, next) => {
   log.backend(`${req.method} ${req.originalUrl}`);
