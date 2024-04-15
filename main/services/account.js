@@ -30,7 +30,7 @@ express.get("/account/api/public/account/:accountId", async (req, res) => {
   res.json({
     id: accountId,
     displayName: "penis",
-    name: "penis",
+    name: accountId,
     email: accountId + "@itztiva.com",
     failedLoginAttempts: 0,
     lastLogin: new Date().toISOString(),
@@ -52,6 +52,11 @@ express.get("/account/api/public/account/:accountId", async (req, res) => {
 });
 
 express.post("/account/api/oauth/token", async (req, res) => {
+  console.log(req.body);
+  let accountId = req.body.username || "moonlight";
+  if (accountId.includes("@")) {
+    accountId = accountId.split("@")[0];
+  }
   res.json({
     access_token: "tivaishot",
     expires_in: 28800,
@@ -60,18 +65,19 @@ express.post("/account/api/oauth/token", async (req, res) => {
     refresh_token: "tivaishot",
     refresh_expires: 86400,
     refresh_expires_at: "9999-12-02T01:12:01.100Z",
-    account_id: "moonlighttest1",
+    account_id: accountId,
     client_id: "clientId",
     internal_client: true,
     client_service: "fortnite",
-    displayName: "penis",
+    displayName: accountId,
     app: "fortnite",
-    in_app_id: "moonlighttest1",
+    in_app_id: accountId,
     device_id: "deviceId",
   });
 });
 
 express.get("/account/api/oauth/verify", async (req, res) => {
+  console.log(req.body);
   res.json({
     token: "tivaishot",
     session_id: "9a1f5e80b47d2c3e6f8a0dc592b4fe7d",
