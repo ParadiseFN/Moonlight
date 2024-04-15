@@ -14,7 +14,7 @@ if (!fs.existsSync(profilesDir)) {
 }
 
 express.post(
-  "/fortnite/api/game/v2/profile/*/client/:operation",
+  "/fortnite/api/game/v2/profile/:accountId/client/:operation",
   functions.getUser,
   async (req, res, next) => {
     let MultiUpdate = [];
@@ -35,18 +35,31 @@ express.post(
     const files = fs.readdirSync("local/athena");
     files.forEach((file) => {
       if (file.endsWith(".json")) {
-        const profiles = require(`../../local/athena/${file}`);
+        const profiles = require(`../../ local / athena / ${file}`);
         if (!profiles.rvn) profiles.rvn = 0;
         if (!profiles.items) profiles.items = {};
         if (!profiles.stats) profiles.stats = {};
         if (!profiles.stats.attributes) profiles.stats.attributes = {};
         if (!profiles.commandRevision) profiles.commandRevision = 0;
 
-        fs.writeFileSync(
-          `./local/profiles/${file}`,
-          JSON.stringify(profiles, null, 2)
-        );
-        if (file === `profile_${profileId}.json`) profile = profiles;
+        const accountId = req.params.accountId;
+        const profileDir = `./ local / profiles / ${accountId}`;
+        const profilePath = path.join(profileDir, file);
+
+        if (!fs.existsSync(profileDir)) {
+          fs.mkdirSync(profileDir, { recursive: true });
+        }
+
+        if (!fs.existsSync(profilePath)) {
+          fs.writeFileSync(
+            profilePath,
+            JSON.stringify(profiles, null, 2)
+          );
+        }
+
+        if (file === `profile_${profileId}.json`) {
+          profile = fs.existsSync(profilePath) ? JSON.parse(fs.readFileSync(profilePath, 'utf8')) : profiles;
+        }
       }
     });
 
@@ -60,17 +73,7 @@ express.post(
       case "ClientQuestLogin":
         break;
       default:
-        log.backend(`Error on ${req.method} ${req.path}`);
-        functions.createError(
-          "errors.com.epicgames.bad_request",
-          "Operation not valid",
-          [],
-          -1,
-          undefined,
-          404,
-          res
-        );
-        return;
+        break;
     }
 
     ApplyProfileChanges.push({
