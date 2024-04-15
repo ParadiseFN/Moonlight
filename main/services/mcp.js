@@ -28,14 +28,14 @@ express.post(
 
     const profileId = req.query.profileId;
 
-    if (userpath.has(profileId)) {
-      return res.status(203).end();
-    }
+    // if (userpath.has(profileId)) {
+    // return res.status(203).end();
+    // }
 
     const files = fs.readdirSync("local/athena");
     files.forEach((file) => {
       if (file.endsWith(".json")) {
-        const profiles = require(`../../ local / athena / ${file}`);
+        const profiles = require(`../../local/athena/${file}`);
         if (!profiles.rvn) profiles.rvn = 0;
         if (!profiles.items) profiles.items = {};
         if (!profiles.stats) profiles.stats = {};
@@ -43,7 +43,7 @@ express.post(
         if (!profiles.commandRevision) profiles.commandRevision = 0;
 
         const accountId = req.params.accountId;
-        const profileDir = `./ local / profiles / ${accountId}`;
+        const profileDir = `./local/profiles/${accountId}`;
         const profilePath = path.join(profileDir, file);
 
         if (!fs.existsSync(profileDir)) {
@@ -51,14 +51,13 @@ express.post(
         }
 
         if (!fs.existsSync(profilePath)) {
-          fs.writeFileSync(
-            profilePath,
-            JSON.stringify(profiles, null, 2)
-          );
+          fs.writeFileSync(profilePath, JSON.stringify(profiles, null, 2));
         }
 
         if (file === `profile_${profileId}.json`) {
-          profile = fs.existsSync(profilePath) ? JSON.parse(fs.readFileSync(profilePath, 'utf8')) : profiles;
+          profile = fs.existsSync(profilePath)
+            ? JSON.parse(fs.readFileSync(profilePath, "utf8"))
+            : profiles;
         }
       }
     });
