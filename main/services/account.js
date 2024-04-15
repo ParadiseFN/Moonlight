@@ -29,7 +29,7 @@ express.get("/account/api/public/account/:accountId", async (req, res) => {
 
   res.json({
     id: accountId,
-    displayName: "penis",
+    displayName: accountId,
     name: accountId,
     email: accountId + "@itztiva.com",
     failedLoginAttempts: 0,
@@ -97,6 +97,36 @@ express.get("/account/api/oauth/verify", async (req, res) => {
     in_app_id: accountId,
     device_id: "deviceId",
   });
+});
+
+express.get("/account/api/public/account", async (req, res) => {
+  var response = [];
+
+  if (typeof req.query.accountId == "string") {
+    var accountId = req.query.accountId;
+    if (accountId.includes("@")) accountId = accountId.split("@")[0];
+
+    response.push({
+      id: accountId,
+      displayName: accountId,
+      externalAuths: {},
+    });
+  }
+
+  if (Array.isArray(req.query.accountId)) {
+    for (var x in req.query.accountId) {
+      var accountId = req.query.accountId[x];
+      if (accountId.includes("@")) accountId = accountId.split("@")[0];
+
+      response.push({
+        id: accountId,
+        displayName: accountId,
+        externalAuths: {},
+      });
+    }
+  }
+
+  res.json(response);
 });
 
 module.exports = express;
